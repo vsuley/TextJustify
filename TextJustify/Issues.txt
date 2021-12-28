@@ -1,0 +1,3 @@
+﻿Paragraphs are getting crushed.
+
+Last line should not be justified.
