@@ -1,0 +1,4 @@
+﻿
+This paragraph will have built-in formatting in the way of
+single newlines. These newlines should be ignored and the 
+words folded in the proper width as required by the parmeter passed in.

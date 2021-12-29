@@ -1,0 +1,12 @@
+﻿1, 0 byte file.
+2, a blank file with just a few spaces in it.
+3, a blank file with just two newlines in it.
+4, a short simple sentence that does not need folding.
+5, a simple but longer sentence that does need folding.
+6, two sentences - one short one long, separated by 2 newlines.
+7, A sentence with extra spaces in it that need to be removed.
+8, a paragraph with single newlines inside it that need removal.
+9, A file that ends with newline character.
+10, A file that ends with a space.
+11, A file that ends with a word.
+12, Multiple newlines, but with spaces between them. Everything should be ignored.

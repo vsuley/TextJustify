@@ -6,13 +6,13 @@ namespace TextJustify
 {
     internal class Justifier
     {
-        public Justifier(StreamHandler streamHandler, int columns)
+        public Justifier(StreamParser streamHandler, int columns)
         {
             StreamHandler = streamHandler;
             Columns = columns;
         }
 
-        public StreamHandler StreamHandler { get; }
+        public StreamParser StreamHandler { get; }
         public int Columns { get; }
 
         internal void Justify()
@@ -37,6 +37,20 @@ namespace TextJustify
                     word = StreamHandler.ReadWord();
                 }
                 lineWords.Add(word);
+
+                // Deal with any special words.
+                if (word.Equals("\n"))
+                {
+                    // Encountered a paragraph change. Dump the words we have into
+                    // a left justified line.
+                    string line = this.LeftAlignLine(lineWords, charCount);
+                    lineWords.Clear();
+                    charCount = -1;
+                    StreamHandler.WriteLine(line);
+                    continue;
+                }
+
+                // Deal with regular words for remainder of loop.
                 charCount += word.Length + 1; // exta 1 for space after word.
 
                 // If adding the last word pushed over the column count, reflow
@@ -48,7 +62,7 @@ namespace TextJustify
                     lineWords.RemoveAt(lastIndex);
                     charCount -= (carryOver.Length + 1);
 
-                    string line = this.LayoutWords(lineWords, charCount);
+                    string line = this.JustifyLine(lineWords, charCount);
                     lineWords.Clear();
                     charCount = -1;
                     StreamHandler.WriteLine(line);
@@ -56,7 +70,7 @@ namespace TextJustify
                 // In case the char count is perfectly aligned at column limit.
                 else if (charCount == Columns)
                 {
-                    string line = this.LayoutWords(lineWords, charCount);
+                    string line = this.JustifyLine(lineWords, charCount);
                     lineWords.Clear();
                     charCount = -1;
                     StreamHandler.WriteLine(line);
@@ -66,14 +80,26 @@ namespace TextJustify
             // Write any leftover words that didn't meet the column limit.
             if (lineWords.Count > 0)
             {
-                string line = this.LayoutWords(lineWords, charCount);
+                string line = this.LeftAlignLine(lineWords, charCount);
                 lineWords.Clear();
                 charCount = -1;
                 StreamHandler.Write(line);
             }
         }
 
-        private string LayoutWords(List<string> lineWords, int charCount)
+        private string LeftAlignLine(List<string> lineWords, int charCount)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < lineWords.Count - 1; i++)
+            {
+                sb.Append(lineWords[i]);
+                sb.Append(" ");
+            }
+            sb.Append(lineWords[lineWords.Count - 1]);
+            return sb.ToString();
+        }
+
+        private string JustifyLine(List<string> lineWords, int charCount)
         {
             string line = "";
 

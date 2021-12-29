@@ -10,7 +10,7 @@ namespace TextJustify
             String outputFile = args[1];
             int columns = int.Parse(args[2]);
 
-            StreamHandler streamHandler = new StreamHandler(inputFile, outputFile);
+            StreamParser streamHandler = new StreamParser(inputFile, outputFile);
             Justifier justifier = new Justifier(streamHandler, columns);
 
             justifier.Justify();

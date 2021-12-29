@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TestData\" />
+    <Compile Remove="TestData\**" />
+    <EmbeddedResource Remove="TestData\**" />
+    <None Remove="TestData\**" />
   </ItemGroup>
+
   <ItemGroup>
-    <Folder Include="TestData\" />
+    <None Remove="TestData\" />
   </ItemGroup>
 </Project>
