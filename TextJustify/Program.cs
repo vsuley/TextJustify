@@ -6,22 +6,49 @@ namespace TextJustify
     {
         static int Main(string[] args)
         {
-            if (args.Length < 2 || args.Length > 3)
+            int columns;
+            String inputFile = null, outputFile = null;
+            bool overwriteInput = false;
+
+            if (args.Length == 1)
+            {
+                // Assume that only the input file was specified and nothind else
+                columns = 80;
+                inputFile = args[0];
+                outputFile = inputFile + ".swp";
+                overwriteInput = true;
+                
+            } else if (args.Length == 2)
+            {
+                // Assume that input and output filenames were specified and
+                // cols were omitted. Obviously this is not ideal because
+                // maybe the user wants to overwrite the input file but does
+                // want to specify custom number of columns. However, this will
+                // do for now.
+                inputFile = args[0];
+                outputFile = args[1];
+                columns = 80;
+                overwriteInput = false;
+            }
+            else if (args.Length == 3)
+            {
+                // All specifiable inputs were added.
+                inputFile = args[0];
+                outputFile = args[1];
+                columns = int.Parse(args[2]);
+                overwriteInput = false;
+            }
+            else
             {
                 Console.WriteLine("Incorrect number of parameters.");
                 PrintHelpText();
                 return 1;
             }
 
-            int columns = 80;
-            if (args.Length == 3)
-            {
-                columns = int.Parse(args[2]);
-            }
-            String inputFile = args[0];
-            String outputFile = args[1];
-
-            StreamParser streamParser = new StreamParser(inputFile, outputFile);
+            StreamParser streamParser = new StreamParser(
+                inputFile,
+                outputFile,
+                overwriteInput);
             Justifier justifier = new Justifier(streamParser, columns);
 
             justifier.Justify();
@@ -38,10 +65,15 @@ namespace TextJustify
                 "\ngiven input file and writes the output to a  second file." +
                 "\n" +
                 "\nUsage:" +
-                "\n$> TextJustify <input file> <output file> [width]" +
+                "\n$> TextJustify <input file> [output file] [width]" +
                 "\n" +
-                "\n(If  the number of  colunms  is not  explicitly specified" +
-                "\nthen 80 is used as the default value.)");
+                "\nIf an output file is not specified then the program goes" +
+                "\ninto file overwrite mode and will replace the input file" +
+                "\nwith the result. Make sure you save the file *before*" +
+                "\ninvoking the program." +
+                "\n" +
+                "\nIf  the number of  colunms  is not  explicitly specified" +
+                "\nthen 80 is used as the default value.");
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿Small first paragraph.
+
+A slightly longer second paragraph that is less than 80 chars.
+
+Now, this should be a longer paragraph that needs some folding over to fit within an 80 column limit. This is now the second sentence in that relatively short but still folded over paragraph.
+
+Another tiny paragraph.
+
+
+
+There were 4 new lines before this paragraph started. In fact, now lets throw in some spaces for good measure:              lots of spaces between the preceding colon and the word 'lots'.
+
+This paragraph will have built-in formatting in the way of
+single newlines. These newlines should be ignored and the 
+words folded in the proper width as required by the parmeter passed in.
+
+This line should end with EOF.

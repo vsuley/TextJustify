@@ -6,14 +6,17 @@ namespace TextJustify
 {
     internal class StreamParser
     {
-        public StreamParser(string inputFile, string outputFile)
+        public StreamParser(string inputFile, string outputFile,
+            bool overwriteInput)
         {
             InputFile = inputFile;
             OutputFile = outputFile;
+            OverwriteInput = overwriteInput;
         }
 
         public string InputFile { get; }
         public string OutputFile { get; }
+        public bool OverwriteInput { get; private set; }
         public bool EoF { get => this.InputStream.EndOfStream; }
         public StreamReader InputStream { get; private set; }
         public StreamWriter OutputStream { get; private set; }
@@ -23,6 +26,12 @@ namespace TextJustify
         {
             this.InputStream.Close();
             this.OutputStream.Close();
+
+            if (OverwriteInput)
+            {
+                string backupFile = this.InputFile + ".backup";
+                File.Replace(this.OutputFile, this.InputFile, backupFile);
+            }
         }
 
         internal void Initialize()
