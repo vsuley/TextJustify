@@ -1,3 +1,15 @@
-﻿Paragraphs are getting crushed.
+﻿Move the swap/backup file naming logic to Program.cs since it seems bit more
+of UX level business logic.
 
-Last line should not be justified.
+Initialize StreamParser before calling justifier.Justify() in the main
+program insead of initializing within the Justify method. This is for the 
+sake of keeping it consistent. Justifier should be able to use the StreamParser
+like a library/utility without having to worry about its internal houskeeping 
+unless there is a strong reason.
+
+If a line ends with a ':' and is within column length limit, do not reflow the 
+next line up to it. As in, do not bring up the next line to the same line as
+':'. At the same time, if a line has a ':' but then has text following it and 
+it is all within the line limit, do not break the line either. This is because 
+I want the user to be able to use ':' either way they want without having TJ mess
+up their formatting.

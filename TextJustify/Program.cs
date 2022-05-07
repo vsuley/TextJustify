@@ -12,10 +12,10 @@ namespace TextJustify
 
             if (args.Length == 1)
             {
-                // Assume that only the input file was specified and nothind else
+                // Assume that only the input file was specified and nothing else
                 columns = 80;
                 inputFile = args[0];
-                outputFile = inputFile + ".swp";
+                outputFile = inputFile + ".swp"; // I don't think this is being used.
                 overwriteInput = true;
                 
             } else if (args.Length == 2)

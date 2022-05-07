@@ -75,7 +75,7 @@ namespace TextJustify
                     charCount = -1;
                     StreamHandler.WriteLine(line);
                 }
-            }
+            } // end of main while loop
 
             // Write any leftover words that didn't meet the column limit.
             if (lineWords.Count > 0)

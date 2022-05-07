@@ -29,7 +29,16 @@ namespace TextJustify
 
             if (OverwriteInput)
             {
+                // We will create a swap file in case the user
+                // is not happy with TJ's changes and want their
+                // original back. Hide this backup file using a '.'
+                // at the filename start and give it a '.backup'
+                // extension.
                 string backupFile = this.InputFile + ".backup";
+                if (backupFile[0] != '.')
+                {
+                    backupFile = '.' + backupFile;
+                }
                 File.Replace(this.OutputFile, this.InputFile, backupFile);
             }
         }
